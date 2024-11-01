@@ -3,7 +3,7 @@ import re
 from typing import Any, Dict, Optional
 
 from homeassistant.components.water_heater import WaterHeaterEntity, WaterHeaterEntityFeature, STATE_GAS, STATE_OFF
-from homeassistant.const import TEMP_CELSIUS, PRECISION_WHOLE
+from homeassistant.const import UnitOfTemperature, PRECISION_WHOLE
 from homeassistant.core import callback
 
 from .const import DOMAIN, TEMPERATURES_MAP
@@ -33,7 +33,7 @@ class RinnaiHeaterWaterHeater(WaterHeaterEntity):
 
         self._attr_min_temp = 35
         self._attr_max_temp = 60
-        self._attr_temperature_unit = TEMP_CELSIUS
+        self._attr_temperature_unit = UnitOfTemperature.CELSIUS
         self._attr_operation_list = [STATE_GAS, STATE_OFF]
         self._attr_supported_features = WaterHeaterEntityFeature.OPERATION_MODE | WaterHeaterEntityFeature.TARGET_TEMPERATURE
 
