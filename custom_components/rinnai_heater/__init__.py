@@ -170,7 +170,7 @@ class RinnaiHeater:
         return self.update_data(await self.request("consumo"), SENSORS_CONSUMO_ARRAY)
 
     def update_data(self, response: list[str], sensors: dict[int, str], update_entities=True):
-        if response is None:
+        if response is None or response is False:
             return False
 
         for address, name in sensors.items():
