@@ -19,5 +19,42 @@
         "scan_interval": "Intervalo de varredura (segundos)"
       }
     }
+  },
+  "entity": {
+    "binary_sensor":{
+      "flame": { "name": "Chama" }
+    },
+    "button":{
+      "temperature_increase": { "name": "Aumentar Temperature" },
+      "temperature_decrease": { "name": "Diminuir Temperature" }
+    },
+    "sensor": {
+      "status": { "name": "Status" },
+      "error": { "name": "Erro" },
+      "actuations": { "name": "Atuações" },
+      "burning_hours": { "name": "Horas de combustão" },
+      "standby_hours": { "name": "Horas em standby" },
+      "fan_diagnostic": { "name": "Diagnóstico da ventoinha" },
+      "fan_speed": { "name": "Rotação da ventoinha" },
+      "pov_current": { "name": "Currente POV" },
+      "power": { "name": "Potência" },
+      "water_inlet_temperature": { "name": "Temperatura de entrada" },
+      "water_outlet_temperature": { "name": "Temperatura de saída" },
+      "water_flow": { "name": "Fluxo real" },
+      "water_flow_start": { "name": "Vazão de acionamento" },
+      "water_flow_stop": { "name": "Vazão de desligamento" },
+      "target_temperature": { "name": "Temperatura setada" },
+      "device_ip": { "name": "IP do dispositivo" },
+      "device_ip_priority": { "name": "IP de prioridade" },
+      "target_temperature_raw": { "name": "Temperatura setada crua" },
+      "serial_number": { "name": "Número serial" },
+      "uptime": { "name": "Uptime" },
+      "mac_address": { "name": "Endereço MAC" },
+      "wifi_signal": { "name": "Sinal WiFi" },
+      "water_usage": { "name": "Uso de água" },
+      "gas_usage": { "name": "Uso de gás" },
+      "water_usage_last_week": { "name": "Uso de água (semana passada)" },
+      "gas_usage_last_week": { "name": "Uso de gás (semana passada)" }
+    }
   }
 }

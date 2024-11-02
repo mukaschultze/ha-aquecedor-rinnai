@@ -19,5 +19,42 @@
         "scan_interval": "Scan Interval (seconds)"
       }
     }
+  },
+  "entity": {
+    "binary_sensor":{
+      "flame": { "name": "Flame" }
+    },
+    "button":{
+      "temperature_increase": { "name": "Increase Temperature" },
+      "temperature_decrease": { "name": "Decrease Temperature" }
+    },
+    "sensor": {
+      "status": { "name": "Status" },
+      "error": { "name": "Error" },
+      "actuations": { "name": "Actuations" },
+      "burning_hours": { "name": "Burning hours" },
+      "standby_hours": { "name": "Standby hours" },
+      "fan_diagnostic": { "name": "Fan diagnostic" },
+      "fan_speed": { "name": "Fan speed" },
+      "pov_current": { "name": "POV current" },
+      "power": { "name": "Power" },
+      "water_inlet_temperature": { "name": "Water inlet temperature" },
+      "water_outlet_temperature": { "name": "Water outlet temperature" },
+      "water_flow": { "name": "Water flow" },
+      "water_flow_start": { "name": "Water flow start" },
+      "water_flow_stop": { "name": "Water flow stop" },
+      "target_temperature": { "name": "Target temperature" },
+      "device_ip": { "name": "Device IP" },
+      "device_ip_priority": { "name": "Device IP priority" },
+      "target_temperature_raw": { "name": "Target temperature raw" },
+      "serial_number": { "name": "Serial number" },
+      "uptime": { "name": "Uptime" },
+      "mac_address": { "name": "MAC address" },
+      "wifi_signal": { "name": "WiFi signal" },
+      "water_usage": { "name": "Water usage" },
+      "gas_usage": { "name": "Gas usage" },
+      "water_usage_last_week": { "name": "Water usage (last week)" },
+      "gas_usage_last_week": { "name": "Gas usage (last week)" }
+    }
   }
 }
