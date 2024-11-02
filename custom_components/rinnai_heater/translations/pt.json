@@ -25,8 +25,8 @@
       "flame": { "name": "Chama" }
     },
     "button":{
-      "temperature_increase": { "name": "Aumentar Temperature" },
-      "temperature_decrease": { "name": "Diminuir Temperature" }
+      "temperature_increase": { "name": "Aumentar Temperatura" },
+      "temperature_decrease": { "name": "Diminuir Temperatura" }
     },
     "sensor": {
       "status": { "name": "Status" },
