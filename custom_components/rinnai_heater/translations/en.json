@@ -4,9 +4,11 @@
     "step": {
       "user": {
         "title": "Select the heater host and device name",
-        "name": "Name",
-        "host": "Host",
-        "scan_interval": "Scan Interval (seconds)"
+        "data": {
+          "name": "Name",
+          "host": "Host",
+          "scan_interval": "Scan Interval (seconds)"
+        }
       }
     }
   },
@@ -14,9 +16,11 @@
     "step": {
       "init": {
         "title": "Select the heater host and device name",
-        "name": "Name",
-        "host": "Host",
-        "scan_interval": "Scan Interval (seconds)"
+        "data": {
+          "name": "Name",
+          "host": "Host",
+          "scan_interval": "Scan Interval (seconds)"
+        }
       }
     }
   },

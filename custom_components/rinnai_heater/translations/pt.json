@@ -4,9 +4,11 @@
     "step": {
       "user": {
         "title": "Selecione o host do aquecedor",
-        "host": "Host",
-        "port": "Porta",
-        "scan_interval": "Intervalo de varredura (segundos)"
+        "data": {
+          "name": "Nome do Dispositivo",
+          "host": "Host",
+          "scan_interval": "Intervalo de varredura (segundos)"
+        }
       }
     }
   },
@@ -14,9 +16,11 @@
     "step": {
       "init": {
         "title": "Selecione o host do aquecedor",
-        "host": "Host",
-        "port": "Porta",
-        "scan_interval": "Intervalo de varredura (segundos)"
+        "data": {
+          "name": "Nome do Dispositivo",
+          "host": "Host",
+          "scan_interval": "Intervalo de varredura (segundos)"
+        }
       }
     }
   },
