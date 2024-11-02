@@ -34,4 +34,4 @@ class RinnaiHeaterConfigFlow(SchemaConfigFlowHandler, domain=DOMAIN):
 
     def async_config_entry_title(self, options: Mapping[str, Any]) -> str:
         """Return config entry title."""
-        return "Rinnai Heater"
+        return options.get("name")
