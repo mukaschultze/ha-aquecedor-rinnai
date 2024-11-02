@@ -38,11 +38,11 @@ class RinnaiHeaterWaterHeater(WaterHeaterEntity):
         self._attr_supported_features = WaterHeaterEntityFeature.OPERATION_MODE | WaterHeaterEntityFeature.TARGET_TEMPERATURE
 
     async def async_added_to_hass(self):
-        self._heater.async_add_rinnai_heater_sensor(
+        await self._heater.async_add_rinnai_heater_sensor(
             self._heater_data_updated)
 
     async def async_will_remove_from_hass(self) -> None:
-        self._heater.async_remove_rinnai_heater_sensor(
+        await self._heater.async_remove_rinnai_heater_sensor(
             self._heater_data_updated)
 
     @callback

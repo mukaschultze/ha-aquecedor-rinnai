@@ -94,7 +94,7 @@ class RinnaiHeater:
         self.data = dict()
 
     @callback
-    def async_add_rinnai_heater_sensor(self, update_callback):
+    async def async_add_rinnai_heater_sensor(self, update_callback):
         # This is the first sensor, set up interval.
         if not self._sensors:
             self._unsub_interval_method = async_track_time_interval(
@@ -104,14 +104,14 @@ class RinnaiHeater:
         self._sensors.append(update_callback)
 
     @callback
-    def async_remove_rinnai_heater_sensor(self, update_callback):
+    async def async_remove_rinnai_heater_sensor(self, update_callback):
         self._sensors.remove(update_callback)
 
         if not self._sensors:
             """stop the interval timer upon removal of last sensor"""
             self._unsub_interval_method()
             self._unsub_interval_method = None
-            self.close()
+            await self.close()
 
     async def _async_refresh_data(self, now=None):
         try:
@@ -124,9 +124,9 @@ class RinnaiHeater:
 
         return True
 
-    def close(self):
+    async def close(self):
         _LOGGER.info("closing http client")
-        self._client.close()
+        await self._client.close()
 
     async def request(self, endpoint: str):
         # if self._reading:
