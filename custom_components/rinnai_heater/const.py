@@ -4,7 +4,7 @@ from homeassistant.components.sensor import SensorDeviceClass
 from homeassistant.components.binary_sensor import BinarySensorDeviceClass
 from homeassistant.const import Platform
 
-DOMAIN = "rinnai_heater"
+DOMAIN = "rinnai"
 
 DEFAULT_SCAN_INTERVAL = 15
 

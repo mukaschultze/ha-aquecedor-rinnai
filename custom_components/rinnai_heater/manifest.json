@@ -1,5 +1,5 @@
 {
-  "domain": "rinnai_heater",
+  "domain": "rinnai",
   "name": "Rinnai Heater",
   "codeowners": ["@mukaschultze"],
   "config_flow": true,
