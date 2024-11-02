@@ -28,6 +28,7 @@ class RinnaiHeaterWaterHeater(WaterHeaterEntity):
 
         self._attr_has_entity_name = True
         self._attr_unique_id = "heater"
+        self._attr_translation_key = self._attr_unique_id
 
         self._attr_min_temp = 35
         self._attr_max_temp = 60

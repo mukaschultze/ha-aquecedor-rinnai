@@ -32,6 +32,9 @@
       "temperature_increase": { "name": "Aumentar Temperatura" },
       "temperature_decrease": { "name": "Diminuir Temperatura" }
     },
+    "water_heater": {
+      "heater": { "name": "Aquecedor" }
+    },
     "sensor": {
       "status": { "name": "Status" },
       "error": { "name": "Erro" },
