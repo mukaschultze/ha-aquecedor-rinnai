@@ -111,7 +111,6 @@ class RinnaiHeater:
             """stop the interval timer upon removal of last sensor"""
             self._unsub_interval_method()
             self._unsub_interval_method = None
-            await self.close()
 
     async def _async_refresh_data(self, now=None):
         try:
@@ -123,10 +122,6 @@ class RinnaiHeater:
             _LOGGER.exception("error reading heater data", exc_info=True)
 
         return True
-
-    async def close(self):
-        _LOGGER.info("closing http client")
-        await self._client.close()
 
     async def request(self, endpoint: str):
         # if self._reading:
