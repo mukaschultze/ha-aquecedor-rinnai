@@ -43,7 +43,7 @@
       "standby_hours": { "name": "Horas em standby" },
       "fan_diagnostic": { "name": "Diagnóstico da ventoinha" },
       "fan_speed": { "name": "Rotação da ventoinha" },
-      "pov_current": { "name": "Currente POV" },
+      "pov_current": { "name": "Corrente POV" },
       "power": { "name": "Potência" },
       "water_inlet_temperature": { "name": "Temperatura de entrada" },
       "water_outlet_temperature": { "name": "Temperatura de saída" },
