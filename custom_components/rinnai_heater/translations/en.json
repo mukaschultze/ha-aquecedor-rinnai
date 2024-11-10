@@ -25,10 +25,10 @@
     }
   },
   "entity": {
-    "binary_sensor":{
+    "binary_sensor": {
       "flame": { "name": "Flame" }
     },
-    "button":{
+    "button": {
       "temperature_increase": { "name": "Increase Temperature" },
       "temperature_decrease": { "name": "Decrease Temperature" }
     },

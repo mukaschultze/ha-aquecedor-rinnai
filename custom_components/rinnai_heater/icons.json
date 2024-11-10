@@ -1,0 +1,33 @@
+{
+  "entity": {
+    "binary_sensor": {
+      "flame": { "default": "mdi:fire" }
+    },
+    "button": {
+      "temperature_increase": { "default": "mdi:thermometer-chevron-up" },
+      "temperature_decrease": { "default": "mdi:thermometer-chevron-down" }
+    },
+    "sensor": {
+      "error": { "default": "mdi:alert-circle" },
+      "actuations": { "default": "mdi:shimmer" },
+      "burning_hours": { "default": "mdi:fire" },
+      "standby_hours": { "default": "mdi:fire-off" },
+      "fan_diagnostic": { "default": "mdi:fan" },
+      "fan_speed": { "default": "mdi:fan" },
+      "pov_current": { "default": "mdi:current-ac" },
+      "power": { "default": "mdi:gas-burner" },
+      "water_inlet_temperature": { "default": "mdi:thermometer-water" },
+      "water_outlet_temperature": { "default": "mdi:thermometer-water" },
+      "water_flow": { "default": "mdi:water" },
+      "water_flow_start": { "default": "mdi:water-check" },
+      "water_flow_stop": { "default": "mdi:water-off" },
+      "target_temperature": { "default": "mdi:water-thermometer" },
+      "device_ip": { "default": "mdi:ip-network" },
+      "device_ip_priority": { "default": "mdi:ip-network" },
+      "target_temperature_raw": { "default": "mdi:water-thermometer" },
+      "mac_address": { "default": "mdi:network" },
+      "gas_usage": { "default": "mdi:meter-gas" },
+      "gas_usage_last_week": { "default": "mdi:meter-gas" }
+    }
+  }
+}

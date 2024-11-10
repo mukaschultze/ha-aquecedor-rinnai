@@ -8,7 +8,7 @@ DOMAIN = "rinnai"
 
 DEFAULT_SCAN_INTERVAL = 15
 
-Sensor = namedtuple("Sensor", ["name", "coeff", "unit", "platform", "device_class", "enabled", "icon", "options", "debug"])
+Sensor = namedtuple("Sensor", ["name", "coeff", "unit", "platform", "device_class", "enabled", "debug"])
 
 STATUS = []
 ERROR = []
@@ -33,35 +33,35 @@ TEMPERATURES_MAP = {
 }
 
 SENSORS = [
-    #      name                               coeff    unit         platform                       device_class                        enabled  icon                         options                  debug
-    Sensor("status",                          1,       None,        Platform.SENSOR,               None,                               True,    None,                        None,                    False),
-    Sensor("flame",                           None,    None,        Platform.BINARY_SENSOR,        BinarySensorDeviceClass.POWER,      True,    "mdi:fire",                  None,                    False),
-    Sensor("error",                           1,       None,        Platform.SENSOR,               None,                               True,    "mdi:alert-circle",          None,                    False),
-    Sensor("actuations",                      1,       None,        Platform.SENSOR,               None,                               True,    "mdi:shimmer",               None,                    False),
-    Sensor("burning_hours",                   1,       "h",         Platform.SENSOR,               SensorDeviceClass.DURATION,         True,    "mdi:fire",                  None,                    False),
-    Sensor("standby_hours",                   1,       "h",         Platform.SENSOR,               SensorDeviceClass.DURATION,         True,    "mdi:fire-off",              None,                    False),
-    Sensor("fan_diagnostic",                  0.1,     None,        Platform.SENSOR,               None,                               False,   "mdi:fan",                   None,                    True ),
-    Sensor("fan_speed",                       0.1,     "Hz",        Platform.SENSOR,               SensorDeviceClass.FREQUENCY,        True,    "mdi:fan",                   None,                    False),
-    Sensor("pov_current",                     0.1,     "mA",        Platform.SENSOR,               SensorDeviceClass.CURRENT,          True,    "mdi:current-ac",            None,                    False),
-    Sensor("power",                           0.01,    "kcal/min",  Platform.SENSOR,               SensorDeviceClass.POWER,            True,    "mdi:gas-burner",            None,                    False),
-    Sensor("water_inlet_temperature",         0.01,    "°C",        Platform.SENSOR,               SensorDeviceClass.TEMPERATURE,      True,    "mdi:thermometer-water",     None,                    False),
-    Sensor("water_outlet_temperature",        0.01,    "°C",        Platform.SENSOR,               SensorDeviceClass.TEMPERATURE,      True,    "mdi:thermometer-water",     None,                    False),
-    Sensor("water_flow",                      0.01,    "L/min",     Platform.SENSOR,               SensorDeviceClass.VOLUME_FLOW_RATE, True,    "mdi:water",                 None,                    False),
-    Sensor("water_flow_start",                0.01,    "L/min",     Platform.SENSOR,               SensorDeviceClass.VOLUME_FLOW_RATE, True,    "mdi:water-check",           None,                    False),
-    Sensor("water_flow_stop",                 0.01,    "L/min",     Platform.SENSOR,               SensorDeviceClass.VOLUME_FLOW_RATE, True,    "mdi:water-off",             None,                    False),
-    Sensor("target_temperature",              0.01,    "°C",        Platform.SENSOR,               SensorDeviceClass.TEMPERATURE,      True,    "mdi:water-thermometer",     None,                    False),
-    Sensor("device_ip",                       None,    None,        Platform.SENSOR,               None,                               True,    "mdi:ip-network",            None,                    True ),
-    Sensor("device_ip_priority",              None,    None,        Platform.SENSOR,               None,                               True,    "mdi:ip-network",            None,                    True ),
-    Sensor("target_temperature_raw",          1,       None,        Platform.SENSOR,               None,                               False,   "mdi:water-thermometer",     None,                    True ),
-    Sensor("serial_number",                   None,    None,        Platform.SENSOR,               None,                               False,   None,                        None,                    True ),
-    Sensor("uptime",                          1,       "s",         Platform.SENSOR,               SensorDeviceClass.DURATION,         False,   None,                        None,                    False),
-    Sensor("mac_address",                     None,    None,        Platform.SENSOR,               None,                               False,   "mdi:network",               None,                    True ),
-    Sensor("wifi_signal",                     1,       "dB",        Platform.SENSOR,               SensorDeviceClass.SIGNAL_STRENGTH,  True,    None,                        None,                    True ),
+    #      name                               coeff    unit         platform                 device_class                        enabled  debug
+    Sensor("status",                          1,       None,        Platform.SENSOR,         None,                               True,    False),
+    Sensor("flame",                           None,    None,        Platform.BINARY_SENSOR,  BinarySensorDeviceClass.POWER,      True,    False),
+    Sensor("error",                           1,       None,        Platform.SENSOR,         None,                               True,    False),
+    Sensor("actuations",                      1,       None,        Platform.SENSOR,         None,                               True,    False),
+    Sensor("burning_hours",                   1,       "h",         Platform.SENSOR,         SensorDeviceClass.DURATION,         True,    False),
+    Sensor("standby_hours",                   1,       "h",         Platform.SENSOR,         SensorDeviceClass.DURATION,         True,    False),
+    Sensor("fan_diagnostic",                  0.1,     None,        Platform.SENSOR,         None,                               False,   True ),
+    Sensor("fan_speed",                       0.1,     "Hz",        Platform.SENSOR,         SensorDeviceClass.FREQUENCY,        True,    False),
+    Sensor("pov_current",                     0.1,     "mA",        Platform.SENSOR,         SensorDeviceClass.CURRENT,          True,    False),
+    Sensor("power",                           0.01,    "kcal/min",  Platform.SENSOR,         SensorDeviceClass.POWER,            True,    False),
+    Sensor("water_inlet_temperature",         0.01,    "°C",        Platform.SENSOR,         SensorDeviceClass.TEMPERATURE,      True,    False),
+    Sensor("water_outlet_temperature",        0.01,    "°C",        Platform.SENSOR,         SensorDeviceClass.TEMPERATURE,      True,    False),
+    Sensor("water_flow",                      0.01,    "L/min",     Platform.SENSOR,         SensorDeviceClass.VOLUME_FLOW_RATE, True,    False),
+    Sensor("water_flow_start",                0.01,    "L/min",     Platform.SENSOR,         SensorDeviceClass.VOLUME_FLOW_RATE, True,    False),
+    Sensor("water_flow_stop",                 0.01,    "L/min",     Platform.SENSOR,         SensorDeviceClass.VOLUME_FLOW_RATE, True,    False),
+    Sensor("target_temperature",              0.01,    "°C",        Platform.SENSOR,         SensorDeviceClass.TEMPERATURE,      True,    False),
+    Sensor("device_ip",                       None,    None,        Platform.SENSOR,         None,                               True,    True ),
+    Sensor("device_ip_priority",              None,    None,        Platform.SENSOR,         None,                               True,    True ),
+    Sensor("target_temperature_raw",          1,       None,        Platform.SENSOR,         None,                               False,   True ),
+    Sensor("serial_number",                   None,    None,        Platform.SENSOR,         None,                               False,   True ),
+    Sensor("uptime",                          1,       "s",         Platform.SENSOR,         SensorDeviceClass.DURATION,         False,   False),
+    Sensor("mac_address",                     None,    None,        Platform.SENSOR,         None,                               False,   True ),
+    Sensor("wifi_signal",                     1,       "dB",        Platform.SENSOR,         SensorDeviceClass.SIGNAL_STRENGTH,  True,    True ),
 
-    Sensor("water_usage",                     1,       "L",         Platform.SENSOR,               SensorDeviceClass.WATER,            True,    None,                        None,                    False),
-    Sensor("gas_usage",                       1,       "kcal",      Platform.SENSOR,               SensorDeviceClass.ENERGY,           True,    "mdi:meter-gas",             None,                    False),
-    Sensor("water_usage_last_week",           1,       "L",         Platform.SENSOR,               SensorDeviceClass.WATER,            True,    None,                        None,                    False),
-    Sensor("gas_usage_last_week",             1,       "kcal",      Platform.SENSOR,               SensorDeviceClass.ENERGY,           True,    "mdi:meter-gas",             None,                    False),
+    Sensor("water_usage",                     1,       "L",         Platform.SENSOR,         SensorDeviceClass.WATER,            True,    False),
+    Sensor("gas_usage",                       1,       "kcal",      Platform.SENSOR,         SensorDeviceClass.ENERGY,           True,    False),
+    Sensor("water_usage_last_week",           1,       "L",         Platform.SENSOR,         SensorDeviceClass.WATER,            True,    False),
+    Sensor("gas_usage_last_week",             1,       "kcal",      Platform.SENSOR,         SensorDeviceClass.ENERGY,           True,    False),
 ]
 
 SENSORS_BUS_ARRAY = {

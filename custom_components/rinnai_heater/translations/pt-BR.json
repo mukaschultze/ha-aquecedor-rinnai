@@ -25,10 +25,10 @@
     }
   },
   "entity": {
-    "binary_sensor":{
+    "binary_sensor": {
       "flame": { "name": "Chama" }
     },
-    "button":{
+    "button": {
       "temperature_increase": { "name": "Aumentar Temperatura" },
       "temperature_decrease": { "name": "Diminuir Temperatura" }
     },

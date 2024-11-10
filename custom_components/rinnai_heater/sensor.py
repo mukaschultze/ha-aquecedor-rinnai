@@ -37,8 +37,6 @@ class RinnaiHeaterSensor(SensorEntity):
         self._attr_native_unit_of_measurement = sensor_info.unit
         self._attr_device_class = sensor_info.device_class
         self._attr_entity_registry_enabled_default = sensor_info.enabled
-        self._attr_icon = sensor_info.icon
-        self._attr_options = sensor_info.options
         self._attr_entity_category = EntityCategory.DIAGNOSTIC if sensor_info.debug else None
 
         if self._coeff is not None:
@@ -64,9 +62,7 @@ class RinnaiHeaterSensor(SensorEntity):
     @property
     def state(self):
         if self._key in self._heater.data:
-            if self._attr_options is not None:
-                return self._attr_options[self._heater.data[self._key]]
-            elif self._coeff is None:
+            if self._coeff is None:
                 return self._heater.data[self._key]
             else:
                 return float(self._heater.data[self._key]) * self._coeff
