@@ -14,7 +14,7 @@ _LOGGER = logging.getLogger(__name__)
 
 CONFIG_SCHEMA = vol.Schema({
     vol.Required("name"): str,
-    vol.Required("host"): str,
+    vol.Required("host", default="WIFI-RINNAI"): str,
     vol.Required("scan_interval", default=DEFAULT_SCAN_INTERVAL): vol.Coerce(float),
 })
 
