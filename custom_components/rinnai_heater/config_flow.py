@@ -8,14 +8,16 @@ from homeassistant.helpers.schema_config_entry_flow import (
     SchemaFlowFormStep,
 )
 
-from .const import DOMAIN, DEFAULT_SCAN_INTERVAL
+from .const import DOMAIN, DEFAULT_SCAN_INTERVAL_BUS, DEFAULT_SCAN_INTERVAL_TELA, DEFAULT_SCAN_INTERVAL_CONSUMO
 
 _LOGGER = logging.getLogger(__name__)
 
 CONFIG_SCHEMA = vol.Schema({
     vol.Required("name"): str,
     vol.Required("host", default="WIFI-RINNAI"): str,
-    vol.Required("scan_interval", default=DEFAULT_SCAN_INTERVAL): vol.Coerce(float),
+    vol.Required("scan_interval_bus", default=DEFAULT_SCAN_INTERVAL_BUS): vol.Coerce(float),
+    vol.Required("scan_interval_tela", default=DEFAULT_SCAN_INTERVAL_TELA): vol.Coerce(float),
+    vol.Required("scan_interval_consumo", default=DEFAULT_SCAN_INTERVAL_CONSUMO): vol.Coerce(float),
 })
 
 CONFIG_FLOW = {

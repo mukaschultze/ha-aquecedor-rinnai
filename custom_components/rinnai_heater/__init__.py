@@ -10,7 +10,7 @@ from homeassistant.helpers.event import async_track_time_interval
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers import device_registry as dr
 
-from .const import DEFAULT_SCAN_INTERVAL, DOMAIN, SENSORS_BUS_ARRAY, SENSORS_TELA_ARRAY, SENSORS_CONSUMO_ARRAY
+from .const import DOMAIN, SENSORS_BUS_ARRAY, SENSORS_TELA_ARRAY, SENSORS_CONSUMO_ARRAY, DEFAULT_SCAN_INTERVAL_BUS, DEFAULT_SCAN_INTERVAL_TELA, DEFAULT_SCAN_INTERVAL_CONSUMO
 
 PLATFORMS = [Platform.SENSOR, Platform.BINARY_SENSOR,
              Platform.BUTTON, Platform.WATER_HEATER]
@@ -70,11 +70,11 @@ class RinnaiHeater:
         entry: ConfigEntry
     ):
         self._hass = hass
+        self._entry = entry
         self._client = async_get_clientsession(hass, False)
         self._host = entry.options["host"]
         self._lock = asyncio.Lock()
-        self._scan_interval = timedelta(seconds=entry.options.get(
-            "scan_interval", DEFAULT_SCAN_INTERVAL))
+
         self._sensors = []
         self._reading = False
         self._name = entry.options["name"]
@@ -85,9 +85,21 @@ class RinnaiHeater:
     async def async_add_rinnai_heater_sensor(self, update_callback):
         # This is the first sensor, set up interval.
         if not self._sensors:
-            self._unsub_interval_method = async_track_time_interval(
-                self._hass, self._async_refresh_data, self._scan_interval
-            )
+            scan_interval_bus = self._entry.options.get(
+                "scan_interval_bus", DEFAULT_SCAN_INTERVAL_BUS)
+            scan_interval_tela = self._entry.options.get(
+                "scan_interval_tela", DEFAULT_SCAN_INTERVAL_TELA)
+            scan_interval_consumo = self._entry.options.get(
+                "scan_interval_consumo", DEFAULT_SCAN_INTERVAL_CONSUMO)
+
+            a = async_track_time_interval(self._hass, self.bus, timedelta(
+                seconds=scan_interval_bus)) if scan_interval_bus > 0 else lambda: None
+            b = async_track_time_interval(self._hass, self.tela, timedelta(
+                seconds=scan_interval_tela)) if scan_interval_tela > 0 else lambda: None
+            c = async_track_time_interval(self._hass, self.consumo, timedelta(
+                seconds=scan_interval_consumo)) if scan_interval_consumo > 0 else lambda: None
+
+            self._unsub_interval_method = lambda: (a(), b(), c())
 
         self._sensors.append(update_callback)
 
@@ -99,17 +111,6 @@ class RinnaiHeater:
             """stop the interval timer upon removal of last sensor"""
             self._unsub_interval_method()
             self._unsub_interval_method = None
-
-    async def _async_refresh_data(self, now=None):
-        try:
-            await self.bus()
-            await self.consumo()
-            await self.tela()
-            # await self.tela()
-        except Exception as e:
-            _LOGGER.exception("error reading heater data", exc_info=True)
-
-        return True
 
     async def request(self, endpoint: str):
         # if self._reading:
@@ -143,13 +144,13 @@ class RinnaiHeater:
     async def lig(self):
         return self.update_data(await self.request("lig"), SENSORS_TELA_ARRAY)
 
-    async def bus(self):
+    async def bus(self, now=None):
         return self.update_data(await self.request("bus"), SENSORS_BUS_ARRAY)
 
-    async def tela(self):
+    async def tela(self, now=None):
         return self.update_data(await self.request("tela_"), SENSORS_TELA_ARRAY)
 
-    async def consumo(self):
+    async def consumo(self, now=None):
         return self.update_data(await self.request("consumo"), SENSORS_CONSUMO_ARRAY)
 
     def update_data(self, response: list[str], sensors: dict[int, str], update_entities=True):

@@ -7,7 +7,9 @@
         "data": {
           "name": "Name",
           "host": "Host",
-          "scan_interval": "Scan Interval (seconds)"
+          "scan_interval_consumo": "Scan Interval - Usage (seconds)",
+          "scan_interval_tela": "Scan Interval - Tela (seconds)",
+          "scan_interval_bus": "Scan Interval - Bus (seconds)"
         }
       }
     }
@@ -19,7 +21,9 @@
         "data": {
           "name": "Name",
           "host": "Host",
-          "scan_interval": "Scan Interval (seconds)"
+          "scan_interval_consumo": "Scan Interval - Usage (seconds)",
+          "scan_interval_tela": "Scan Interval - Tela (seconds)",
+          "scan_interval_bus": "Scan Interval - Bus (seconds)"
         }
       }
     }

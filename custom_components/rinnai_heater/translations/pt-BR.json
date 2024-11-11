@@ -7,7 +7,9 @@
         "data": {
           "name": "Nome do Dispositivo",
           "host": "Host",
-          "scan_interval": "Intervalo de varredura (segundos)"
+          "scan_interval_consumo": "Intervalo de varredura - Uso (segundos)",
+          "scan_interval_tela": "Intervalo de varredura - Tela (segundos)",
+          "scan_interval_bus": "Intervalo de varredura - Bus (segundos)"
         }
       }
     }
@@ -19,7 +21,9 @@
         "data": {
           "name": "Nome do Dispositivo",
           "host": "Host",
-          "scan_interval": "Intervalo de varredura (segundos)"
+          "scan_interval_consumo": "Intervalo de varredura - Uso (segundos)",
+          "scan_interval_tela": "Intervalo de varredura - Tela (segundos)",
+          "scan_interval_bus": "Intervalo de varredura - Bus (segundos)"
         }
       }
     }
