@@ -3,29 +3,53 @@
   "config": {
     "step": {
       "user": {
-        "title": "Selecione o host do aquecedor",
+        "description": "Selecione o host do aquecedor",
         "data": {
-          "name": "Nome do Dispositivo",
-          "host": "Host",
+          "host": "[%key:common::config_flow::data::host%]"
+        },
+        "data_description": {
+          "host": "Tente usar WIFI-RINNAI.local ou WIFI-RINNAI.lan se você não souber o endereço IP do controlador"
+        }
+      },
+      "config": {
+        "description": "Selecione o nome do dispositivo",
+        "data": {
+          "name": "[%key:common::config_flow::data::name%]",
           "scan_interval_consumo": "Intervalo de varredura - Uso (segundos)",
           "scan_interval_tela": "Intervalo de varredura - Tela (segundos)",
           "scan_interval_bus": "Intervalo de varredura - Bus (segundos)"
+        },
+        "data_description": {
+          "scan_interval_consumo": "Intervalo de tempo entre as atualizações do consumo de água e gás",
+          "scan_interval_tela": "Intervalo de tempo entre as atualizações da chama",
+          "scan_interval_bus": "Intervalo de tempo entre as atualizações de todos os demais sensores"
         }
-      }
-    }
-  },
-  "options": {
-    "step": {
-      "init": {
-        "title": "Selecione o host do aquecedor",
+      },
+      "reconfigure": {
+        "description": "Atualize as configurações do {device_name}.",
         "data": {
-          "name": "Nome do Dispositivo",
-          "host": "Host",
-          "scan_interval_consumo": "Intervalo de varredura - Uso (segundos)",
-          "scan_interval_tela": "Intervalo de varredura - Tela (segundos)",
-          "scan_interval_bus": "Intervalo de varredura - Bus (segundos)"
+          "name": "[%key:common::config_flow::data::name%]",
+          "host": "[%key:common::config_flow::data::host%]",
+          "scan_interval_consumo": "[%key:component::rinnai::config::step::config::data::scan_interval_consumo%]",
+          "scan_interval_tela": "[%key:component::rinnai::config::step::config::data::scan_interval_tela%]",
+          "scan_interval_bus": "[%key:component::rinnai::config::step::config::data::scan_interval_bus%]"
+        },
+        "data_description": {
+          "host": "[%key:component::rinnai::config::step::user::data_description::host%]",
+          "scan_interval_consumo": "[%key:component::rinnai::config::step::config::data_description::scan_interval_consumo%]",
+          "scan_interval_tela": "[%key:component::rinnai::config::step::config::data_description::scan_interval_tela%]",
+          "scan_interval_bus": "[%key:component::rinnai::config::step::config::data_description::scan_interval_bus%]"
         }
       }
+    },
+    "error": {
+      "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]"
+    },
+    "abort": {
+      "already_configured": "[%key:common::config_flow::abort::already_configured_device%]",
+      "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
+      "reconfigure_successful": "[%key:common::config_flow::abort::reconfigure_successful%]",
+      "unique_id_mismatch": "O número serial do dispositivo não corresponde ao número serial anterior"
     }
   },
   "entity": {

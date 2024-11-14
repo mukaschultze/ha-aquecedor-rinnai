@@ -6,6 +6,13 @@ from homeassistant.const import Platform
 
 DOMAIN = "rinnai"
 
+CONF_SCAN_INTERVAL_BUS = "scan_interval_bus"
+CONF_SCAN_INTERVAL_TELA = "scan_interval_tela"
+CONF_SCAN_INTERVAL_CONSUMO = "scan_interval_consumo"
+
+DEFAULT_NAME = "Rinnai"
+DEFAULT_HOST = "WIFI-RINNAI"
+
 DEFAULT_SCAN_INTERVAL_BUS = 15
 DEFAULT_SCAN_INTERVAL_TELA = 0
 DEFAULT_SCAN_INTERVAL_CONSUMO = 60 * 5
@@ -37,7 +44,7 @@ TEMPERATURES_MAP = {
 SENSORS = [
     #      name                               coeff    unit         platform                 device_class                        enabled  debug
     Sensor("status",                          1,       None,        Platform.SENSOR,         None,                               True,    False),
-    Sensor("flame",                           None,    None,        Platform.BINARY_SENSOR,  BinarySensorDeviceClass.POWER,      True,    False),
+    Sensor("flame",                           None,    None,        Platform.BINARY_SENSOR,  BinarySensorDeviceClass.POWER,      False,   False),
     Sensor("error",                           1,       None,        Platform.SENSOR,         None,                               True,    False),
     Sensor("actuations",                      1,       None,        Platform.SENSOR,         None,                               True,    False),
     Sensor("burning_hours",                   1,       "h",         Platform.SENSOR,         SensorDeviceClass.DURATION,         True,    False),
