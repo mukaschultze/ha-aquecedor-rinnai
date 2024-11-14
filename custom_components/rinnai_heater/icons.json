@@ -9,6 +9,7 @@
     },
     "sensor": {
       "error": { "default": "mdi:alert-circle" },
+      "error_message": { "default": "mdi:alert-circle" },
       "actuations": { "default": "mdi:shimmer" },
       "burning_hours": { "default": "mdi:fire" },
       "standby_hours": { "default": "mdi:fire-off" },

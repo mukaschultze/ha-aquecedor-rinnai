@@ -89,7 +89,27 @@
       "water_usage": { "name": "Uso de água" },
       "gas_usage": { "name": "Uso de gás" },
       "water_usage_last_week": { "name": "Uso de água (semana passada)" },
-      "gas_usage_last_week": { "name": "Uso de gás (semana passada)" }
+      "gas_usage_last_week": { "name": "Uso de gás (semana passada)" },
+      "error_message": {
+        "name": "Mensagem de erro",
+        "state": {
+          "0": "Nenhum erro detectado",
+          "2": "Desligamento pelo timer (60 minutos)",
+          "10": "Problema na ventoinha ou obstrução no fluxo",
+          "11": "Ao ligar não acende (falta de gás).",
+          "12": "Falta de gás durante o uso",
+          "14": "Fusível ou termostato rompido",
+          "16": "Alta temperatura da água",
+          "19": "Fiação está em curto, fuga de corrente.",
+          "32": "Termistor com problema",
+          "52": "Válvula modulador de gás (POV) com problema.",
+          "61": "Conector da ventoinha solto (RPM)",
+          "71": "Válvula solenóide com problema de acionamento",
+          "72": "Sensor de chama com problema",
+          "90": "Ao ligar não aciona a ventoinha",
+          "99": "Ventoinha com problema"
+        }
+      }
     }
   }
 }

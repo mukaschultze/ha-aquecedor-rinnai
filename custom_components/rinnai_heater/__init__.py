@@ -186,7 +186,7 @@ class RinnaiHeater:
         if response is None or response is False:
             return False
 
-        for address, name in sensors.items():
+        for name, address in sensors.items():
             self.data[name] = response[address]
 
         if update_entities:

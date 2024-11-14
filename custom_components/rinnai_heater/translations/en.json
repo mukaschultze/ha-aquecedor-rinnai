@@ -89,7 +89,27 @@
       "water_usage": { "name": "Water usage" },
       "gas_usage": { "name": "Gas usage" },
       "water_usage_last_week": { "name": "Water usage (last week)" },
-      "gas_usage_last_week": { "name": "Gas usage (last week)" }
+      "gas_usage_last_week": { "name": "Gas usage (last week)" },
+      "error_message": {
+        "name": "Error message",
+        "state": {
+          "0": "No error detected",
+          "2": "Timeout by timer (60 minutes)",
+          "10": "Fan issue or flow obstruction",
+          "11": "Does not ignite when turned on (no gas).",
+          "12": "Gas shortage during use",
+          "14": "Fuse or thermostat broken",
+          "16": "High water temperature",
+          "19": "Wiring is shorted, current leakage.",
+          "32": "Thermistor issue",
+          "52": "Gas modulator valve (POV) issue.",
+          "61": "Fan connector loose (RPM)",
+          "71": "Solenoid valve issue",
+          "72": "Flame sensor issue",
+          "90": "Does not activate the fan when turned on",
+          "99": "Fan issue"
+        }
+      }
     }
   }
 }

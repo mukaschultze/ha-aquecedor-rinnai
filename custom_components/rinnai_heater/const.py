@@ -17,7 +17,9 @@ DEFAULT_SCAN_INTERVAL_BUS = 15
 DEFAULT_SCAN_INTERVAL_TELA = 0
 DEFAULT_SCAN_INTERVAL_CONSUMO = 60 * 5
 
-Sensor = namedtuple("Sensor", ["name", "coeff", "unit", "platform", "device_class", "enabled", "debug"])
+Sensor = namedtuple(
+    "Sensor", ["name", "coeff", "unit", "platform", "device_class", "enabled", "debug"]
+)
 
 STATUS = []
 ERROR = []
@@ -41,11 +43,13 @@ TEMPERATURES_MAP = {
     "20": 6000,
 }
 
+# fmt: off
 SENSORS = [
     #      name                               coeff    unit         platform                 device_class                        enabled  debug
     Sensor("status",                          1,       None,        Platform.SENSOR,         None,                               True,    False),
     Sensor("flame",                           None,    None,        Platform.BINARY_SENSOR,  BinarySensorDeviceClass.POWER,      False,   False),
     Sensor("error",                           1,       None,        Platform.SENSOR,         None,                               True,    False),
+    Sensor("error_message",                   None,    None,        Platform.SENSOR,         None,                               True,    False),
     Sensor("actuations",                      1,       None,        Platform.SENSOR,         None,                               True,    False),
     Sensor("burning_hours",                   1,       "h",         Platform.SENSOR,         SensorDeviceClass.DURATION,         True,    False),
     Sensor("standby_hours",                   1,       "h",         Platform.SENSOR,         SensorDeviceClass.DURATION,         True,    False),
@@ -72,46 +76,48 @@ SENSORS = [
     Sensor("water_usage_last_week",           1,       "L",         Platform.SENSOR,         SensorDeviceClass.WATER,            True,    False),
     Sensor("gas_usage_last_week",             1,       "kcal",      Platform.SENSOR,         SensorDeviceClass.ENERGY,           True,    False),
 ]
+# fmt: on
 
 SENSORS_BUS_ARRAY = {
-    0: "status",
-    1: "error",
-    3: "actuations",
-    4: "burning_hours",
-    5: "standby_hours",
-    6: "fan_diagnostic",
-    7: "fan_speed",
-    8: "pov_current",
-    9: "power",
-    10: "water_inlet_temperature",
-    11: "water_outlet_temperature",
-    12: "water_flow",
-    13: "water_flow_start",
-    14: "water_flow_stop",
-    15: "target_temperature",
-    16: "device_ip",
-    17: "device_ip_priority",
-    18: "target_temperature_raw",
-    19: "serial_number",
-    20: "uptime",
-    25: "mac_address",
-    37: "wifi_signal",
+    "status": 0,
+    "error": 1,
+    "error_message": 1,  # duplicate, one is for error code another for error message
+    "actuations": 3,
+    "burning_hours": 4,
+    "standby_hours": 5,
+    "fan_diagnostic": 6,
+    "fan_speed": 7,
+    "pov_current": 8,
+    "power": 9,
+    "water_inlet_temperature": 10,
+    "water_outlet_temperature": 11,
+    "water_flow": 12,
+    "water_flow_start": 13,
+    "water_flow_stop": 14,
+    "target_temperature": 15,
+    "device_ip": 16,
+    "device_ip_priority": 17,
+    "target_temperature_raw": 18,
+    "serial_number": 19,
+    "uptime": 20,
+    "mac_address": 25,
+    "wifi_signal": 37,
 }
 
 SENSORS_TELA_ARRAY = {
-    0: "status",
-    2: "flame",
-    3: "burning_hours",
-    4: "standby_hours",
-    5: "water_flow",
-    6: "device_ip_priority",
-    7: "target_temperature_raw",
-    8: "uptime",
+    "status": 0,
+    "flame": 2,
+    "burning_hours": 3,
+    "standby_hours": 4,
+    "water_flow": 5,
+    "device_ip_priority": 6,
+    "target_temperature_raw": 7,
+    "uptime": 8,
 }
 
 SENSORS_CONSUMO_ARRAY = {
-    1: "water_usage",
-    2: "gas_usage",
-    4: "water_usage_last_week",
-    5: "gas_usage_last_week",
+    "water_usage": 1,
+    "gas_usage": 2,
+    "water_usage_last_week": 4,
+    "gas_usage_last_week": 5,
 }
