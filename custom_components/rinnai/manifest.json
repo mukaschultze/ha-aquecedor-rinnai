@@ -4,11 +4,11 @@
   "codeowners": ["@mukaschultze"],
   "config_flow": true,
   "dependencies": [],
+  "dhcp": [{ "hostname": "wifi-rinnai*" }, { "registered_devices": true }],
   "documentation": "https://github.com/mukaschultze/ha-rinnai-heater",
   "integration_type": "device",
   "iot_class": "local_polling",
   "issue_tracker": "https://github.com/mukaschultze/ha-rinnai-heater/issues",
   "version": "0.0.1",
-  "zeroconf": [{ "type": "_arduino._tcp.local.", "name": "wifi-rinnai*" }],
-  "dhcp": [{ "hostname": "wifi-rinnai*" }, { "registered_devices": true }]
+  "zeroconf": [{ "type": "_arduino._tcp.local.", "name": "wifi-rinnai*" }]
 }
