@@ -40,13 +40,13 @@ CONFIG_SCHEMA = vol.Schema(
     {
         vol.Required(CONF_NAME, default=DEFAULT_NAME): str,
         vol.Optional(
-            CONF_SCAN_INTERVAL_BUS, default=DEFAULT_SCAN_INTERVAL_BUS
-        ): vol.Coerce(float),
-        vol.Optional(
             CONF_SCAN_INTERVAL_TELA, default=DEFAULT_SCAN_INTERVAL_TELA
         ): vol.Coerce(float),
         vol.Optional(
             CONF_SCAN_INTERVAL_CONSUMO, default=DEFAULT_SCAN_INTERVAL_CONSUMO
+        ): vol.Coerce(float),
+        vol.Optional(
+            CONF_SCAN_INTERVAL_BUS, default=DEFAULT_SCAN_INTERVAL_BUS
         ): vol.Coerce(float),
     }
 )
