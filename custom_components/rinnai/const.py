@@ -6,6 +6,9 @@ from homeassistant.const import Platform
 
 DOMAIN = "rinnai"
 
+PRIORITY_DISCRIMINATOR = "HomeAssistant"
+
+CONF_AUTO_PRIORITY = "auto_priority"
 CONF_SCAN_INTERVAL_BUS = "scan_interval_bus"
 CONF_SCAN_INTERVAL_TELA = "scan_interval_tela"
 CONF_SCAN_INTERVAL_CONSUMO = "scan_interval_consumo"
@@ -13,6 +16,7 @@ CONF_SCAN_INTERVAL_CONSUMO = "scan_interval_consumo"
 DEFAULT_NAME = "Rinnai"
 DEFAULT_HOST = "WIFI-RINNAI"
 
+DEFAULT_AUTO_PRIORITY = False
 DEFAULT_SCAN_INTERVAL_BUS = 15
 DEFAULT_SCAN_INTERVAL_TELA = 0
 DEFAULT_SCAN_INTERVAL_CONSUMO = 60 * 5

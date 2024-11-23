@@ -15,11 +15,13 @@
         "description": "Device configuration",
         "data": {
           "name": "Device Name",
+          "auto_priority": "Auto set priority",
           "scan_interval_consumo": "Scan Interval - Usage (seconds)",
           "scan_interval_tela": "Scan Interval - Tela (seconds)",
           "scan_interval_bus": "Scan Interval - Bus (seconds)"
         },
         "data_description": {
+          "auto_priority": "Automatically set Home Assistant as priority when attempting to change the heater temperature. The priority is used to defined which device is able to change the heater settings. Leaving this option disabled will prevent Home Assistant from changing the temperature during heater operation (when the flame is on)",
           "scan_interval_consumo": "Scan interval for gas and water usage updates. 0 = disabled",
           "scan_interval_tela": "Scan interval for flame updates. 0 = disabled",
           "scan_interval_bus": "Scan interval for all other sensors updates. 0 = disabled"
@@ -28,14 +30,16 @@
       "reconfigure": {
         "description": "Update the {device_name} settings.",
         "data": {
-          "name": "Device Name",
           "host": "Host or IP address",
+          "name": "Device Name",
+          "auto_priority": "Auto set priority",
           "scan_interval_consumo": "Scan Interval - Usage (seconds)",
           "scan_interval_tela": "Scan Interval - Tela (seconds)",
           "scan_interval_bus": "Scan Interval - Bus (seconds)"
         },
         "data_description": {
           "host": "Try using WIFI-RINNAI.local or WIFI-RINNAI.lan if you don't know the IP address of the controller",
+          "auto_priority": "Automatically set Home Assistant as priority when attempting to change the heater temperature. The priority is used to defined which device is able to change the heater settings. Leaving this option disabled will prevent Home Assistant from changing the temperature during heater operation (when the flame is on)",
           "scan_interval_consumo": "Scan interval for gas and water usage updates. 0 = disabled",
           "scan_interval_tela": "Scan interval for flame updates. 0 = disabled",
           "scan_interval_bus": "Scan interval for all other sensors updates. 0 = disabled"
@@ -55,6 +59,9 @@
   "entity": {
     "binary_sensor": {
       "flame": { "name": "Flame" }
+    },
+    "switch": {
+      "priority": { "name": "Priority" }
     },
     "button": {
       "temperature_increase": { "name": "Increase Temperature" },

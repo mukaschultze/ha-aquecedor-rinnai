@@ -15,11 +15,13 @@
         "description": "Configure o dispositivo",
         "data": {
           "name": "Nome do dispositivo",
+          "auto_priority": "Prioridade automática",
           "scan_interval_consumo": "Intervalo de varredura - Consumo (segundos)",
           "scan_interval_tela": "Intervalo de varredura - Tela (segundos)",
           "scan_interval_bus": "Intervalo de varredura - Bus (segundos)"
         },
         "data_description": {
+          "auto_priority": "Designar automaticamente o Home Assistant como prioridade ao tentar alterar a temperatura do aquecedor. A prioridade é usada para definir qual dispositivo pode alterar as configurações do aquecedor. Deixar essa opção desativada impedirá que o Home Assistant altere a temperatura durante o funcionamento do aquecedor (quando a chama está acesa)",
           "scan_interval_consumo": "Intervalo de tempo entre as atualizações do consumo de água e gás. 0 = desligado",
           "scan_interval_tela": "Intervalo de tempo entre as atualizações da chama. 0 = desligado",
           "scan_interval_bus": "Intervalo de tempo entre as atualizações de todos os demais sensores. 0 = desligado"
@@ -28,14 +30,16 @@
       "reconfigure": {
         "description": "Atualize as configurações do {device_name}.",
         "data": {
-          "name": "Nome do dispositivo",
           "host": "Host ou endereço IP",
+          "name": "Nome do dispositivo",
+          "auto_priority": "Prioridade automática",
           "scan_interval_consumo": "Intervalo de varredura - Consumo (segundos)",
           "scan_interval_tela": "Intervalo de varredura - Tela (segundos)",
           "scan_interval_bus": "Intervalo de varredura - Bus (segundos)"
         },
         "data_description": {
           "host": "Tente usar WIFI-RINNAI.local ou WIFI-RINNAI.lan se você não souber o endereço IP do controlador",
+          "auto_priority": "Designar automaticamente o Home Assistant como prioridade ao tentar alterar a temperatura do aquecedor. A prioridade é usada para definir qual dispositivo pode alterar as configurações do aquecedor. Deixar essa opção desativada impedirá que o Home Assistant altere a temperatura durante o funcionamento do aquecedor (quando a chama está acesa)",
           "scan_interval_consumo": "Intervalo de tempo entre as atualizações do consumo de água e gás. 0 = desligado",
           "scan_interval_tela": "Intervalo de tempo entre as atualizações da chama. 0 = desligado",
           "scan_interval_bus": "Intervalo de tempo entre as atualizações de todos os demais sensores. 0 = desligado"
@@ -55,6 +59,9 @@
   "entity": {
     "binary_sensor": {
       "flame": { "name": "Chama" }
+    },
+    "switch": {
+      "priority": { "name": "Prioridade" }
     },
     "button": {
       "temperature_increase": { "name": "Aumentar Temperatura" },

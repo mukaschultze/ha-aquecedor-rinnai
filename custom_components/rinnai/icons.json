@@ -1,7 +1,22 @@
 {
   "entity": {
     "binary_sensor": {
-      "flame": { "default": "mdi:fire" }
+      "flame": {
+        "default": "mdi:fire",
+        "state": {
+          "on": "mdi:fire",
+          "off": "mdi:fire-off"
+        }
+      }
+    },
+    "switch": {
+      "priority": {
+        "default": "mdi:lock",
+        "state": {
+          "on": "mdi:lock",
+          "off": "mdi:lock-open"
+        }
+      }
     },
     "button": {
       "temperature_increase": { "default": "mdi:thermometer-chevron-up" },

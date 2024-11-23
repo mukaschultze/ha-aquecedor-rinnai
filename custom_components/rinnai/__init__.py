@@ -1,5 +1,7 @@
 import asyncio
 import logging
+import aiohttp
+
 from datetime import timedelta
 
 from homeassistant.config_entries import ConfigEntry
@@ -13,12 +15,15 @@ from homeassistant.const import CONF_HOST
 
 from .const import (
     DOMAIN,
+    PRIORITY_DISCRIMINATOR,
     SENSORS_BUS_ARRAY,
     SENSORS_TELA_ARRAY,
     SENSORS_CONSUMO_ARRAY,
+    CONF_AUTO_PRIORITY,
     CONF_SCAN_INTERVAL_BUS,
     CONF_SCAN_INTERVAL_TELA,
     CONF_SCAN_INTERVAL_CONSUMO,
+    DEFAULT_AUTO_PRIORITY,
     DEFAULT_SCAN_INTERVAL_BUS,
     DEFAULT_SCAN_INTERVAL_TELA,
     DEFAULT_SCAN_INTERVAL_CONSUMO,
@@ -28,6 +33,7 @@ PLATFORMS = [
     Platform.SENSOR,
     Platform.BINARY_SENSOR,
     Platform.BUTTON,
+    Platform.SWITCH,
     Platform.WATER_HEATER,
 ]
 _LOGGER = logging.getLogger(__name__)
@@ -88,6 +94,7 @@ class RinnaiHeater:
         self._sensors = []
         self._reading = False
         self._name = entry.title
+        self._auto_priority = entry.data.get(CONF_AUTO_PRIORITY, DEFAULT_AUTO_PRIORITY)
 
         self.data = dict()
 
@@ -155,9 +162,10 @@ class RinnaiHeater:
                 res = await self._client.get(f"http://{self._host}/{endpoint}")
                 read = await res.text()
                 return read.split(",")
+            except aiohttp.client_exceptions.ServerDisconnectedError:
+                return True  # not even an empty response, the priority endpoint simply closes the TCP connection
             except Exception as e:
                 _LOGGER.exception(f"Error fetching /{endpoint} data", exc_info=True)
-                self.data = dict()  # clear data on error so entities become unavailable
                 return False
             finally:
                 self._reading = False
@@ -180,11 +188,15 @@ class RinnaiHeater:
     async def consumo(self, now=None):
         return self.update_data(await self.request("consumo"), SENSORS_CONSUMO_ARRAY)
 
+    async def prioridade(self, set: bool):
+        priority = PRIORITY_DISCRIMINATOR if set else "null"
+        return await self.request(f"ip:{priority}:pri")
+
     def update_data(
         self, response: list[str], sensors: dict[int, str], update_entities=True
     ):
-        if response is None or response is False:
-            return False
+        no_response = response is None or response is False
+        response = response or dict()
 
         for name, address in sensors.items():
             self.data[name] = response[address]
@@ -193,7 +205,7 @@ class RinnaiHeater:
             for update_callback in self._sensors:
                 update_callback()
 
-        return True
+        return not no_response
 
     def _device_info(self):
         return {

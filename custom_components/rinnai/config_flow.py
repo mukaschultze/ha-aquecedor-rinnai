@@ -9,9 +9,11 @@ from .const import (
     DOMAIN,
     DEFAULT_NAME,
     DEFAULT_HOST,
+    DEFAULT_AUTO_PRIORITY,
     DEFAULT_SCAN_INTERVAL_BUS,
     DEFAULT_SCAN_INTERVAL_CONSUMO,
     DEFAULT_SCAN_INTERVAL_TELA,
+    CONF_AUTO_PRIORITY,
     CONF_SCAN_INTERVAL_BUS,
     CONF_SCAN_INTERVAL_CONSUMO,
     CONF_SCAN_INTERVAL_TELA,
@@ -39,6 +41,7 @@ HOST_SCHEMA = vol.Schema({vol.Required(CONF_HOST, default=DEFAULT_HOST): str})
 CONFIG_SCHEMA = vol.Schema(
     {
         vol.Required(CONF_NAME, default=DEFAULT_NAME): str,
+        vol.Optional(CONF_AUTO_PRIORITY, default=DEFAULT_AUTO_PRIORITY): bool,
         vol.Optional(
             CONF_SCAN_INTERVAL_TELA, default=DEFAULT_SCAN_INTERVAL_TELA
         ): vol.Coerce(float),

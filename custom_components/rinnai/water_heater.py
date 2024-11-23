@@ -93,11 +93,17 @@ class RinnaiHeaterWaterHeater(WaterHeaterEntity):
         _LOGGER.debug(f"async_set_temperature: {temperature} -> {nearest_temperature}/{
                       nearest_temperature_index} - {current_temperature}/{current_temperature_index} - {steps}")
 
+        if self._heater._auto_priority:
+            await self._heater.prioridade(True)
+
         for i in range(abs(steps)):
             if steps > 0:
                 await self._heater.inc()
             else:
                 await self._heater.dec()
+
+        if self._heater._auto_priority:
+            await self._heater.prioridade(False)
 
     async def async_set_operation_mode(self, mode):
         if mode == STATE_GAS:
