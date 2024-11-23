@@ -2,6 +2,7 @@ import logging
 from typing import Any, Dict, Optional
 
 from homeassistant.components.switch import SwitchEntity
+from homeassistant.core import callback
 
 from .const import DOMAIN
 
@@ -27,6 +28,16 @@ class RinnaiHeaterPrioritySwitch(SwitchEntity):
         self._attr_has_entity_name = True
         self._attr_unique_id = "priority"
         self._attr_translation_key = self._attr_unique_id
+
+    async def async_added_to_hass(self):
+        await self._heater.async_add_rinnai_heater_sensor(self._heater_data_updated)
+
+    async def async_will_remove_from_hass(self) -> None:
+        await self._heater.async_remove_rinnai_heater_sensor(self._heater_data_updated)
+
+    @callback
+    def _heater_data_updated(self):
+        self.async_write_ha_state()
 
     @property
     def is_on(self):

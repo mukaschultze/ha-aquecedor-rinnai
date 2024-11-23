@@ -35,15 +35,15 @@ class RinnaiHeaterBinarySensor(BinarySensorEntity):
         self._attr_translation_key = self._attr_unique_id
         self._attr_device_class = sensor_info.device_class
         self._attr_entity_registry_enabled_default = sensor_info.enabled
-        self._attr_entity_category = EntityCategory.DIAGNOSTIC if sensor_info.debug else None
+        self._attr_entity_category = (
+            EntityCategory.DIAGNOSTIC if sensor_info.debug else None
+        )
 
     async def async_added_to_hass(self):
-        await self._heater.async_add_rinnai_heater_sensor(
-            self._heater_data_updated)
+        await self._heater.async_add_rinnai_heater_sensor(self._heater_data_updated)
 
     async def async_will_remove_from_hass(self) -> None:
-        await self._heater.async_remove_rinnai_heater_sensor(
-            self._heater_data_updated)
+        await self._heater.async_remove_rinnai_heater_sensor(self._heater_data_updated)
 
     @callback
     def _heater_data_updated(self):

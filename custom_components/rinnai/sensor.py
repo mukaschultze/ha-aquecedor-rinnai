@@ -2,7 +2,12 @@ import logging
 import re
 from typing import Any, Dict, Optional
 
-from homeassistant.components.sensor import SensorEntity, EntityCategory, SensorStateClass, SensorDeviceClass
+from homeassistant.components.sensor import (
+    SensorEntity,
+    EntityCategory,
+    SensorStateClass,
+    SensorDeviceClass,
+)
 from homeassistant.const import Platform
 from homeassistant.core import callback
 
@@ -37,23 +42,25 @@ class RinnaiHeaterSensor(SensorEntity):
         self._attr_native_unit_of_measurement = sensor_info.unit
         self._attr_device_class = sensor_info.device_class
         self._attr_entity_registry_enabled_default = sensor_info.enabled
-        self._attr_entity_category = EntityCategory.DIAGNOSTIC if sensor_info.debug else None
+        self._attr_entity_category = (
+            EntityCategory.DIAGNOSTIC if sensor_info.debug else None
+        )
 
         if self._coeff is not None:
-            if self._attr_device_class == SensorDeviceClass.WATER or self._attr_device_class == SensorDeviceClass.ENERGY:
+            if (
+                self._attr_device_class == SensorDeviceClass.WATER
+                or self._attr_device_class == SensorDeviceClass.ENERGY
+            ):
                 self._attr_state_class = SensorStateClass.TOTAL_INCREASING
             else:
                 self._attr_state_class = SensorStateClass.MEASUREMENT
-            self._attr_suggested_display_precision = str(
-                self._coeff).count('0')
+            self._attr_suggested_display_precision = str(self._coeff).count("0")
 
     async def async_added_to_hass(self):
-        await self._heater.async_add_rinnai_heater_sensor(
-            self._heater_data_updated)
+        await self._heater.async_add_rinnai_heater_sensor(self._heater_data_updated)
 
     async def async_will_remove_from_hass(self) -> None:
-        await self._heater.async_remove_rinnai_heater_sensor(
-            self._heater_data_updated)
+        await self._heater.async_remove_rinnai_heater_sensor(self._heater_data_updated)
 
     @callback
     def _heater_data_updated(self):

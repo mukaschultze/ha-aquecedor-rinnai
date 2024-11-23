@@ -18,15 +18,13 @@ async def async_get_config_entry_diagnostics(
     diag_data = {"entry": async_redact_data(entry.as_dict(), TO_REDACT)}
 
     devs_data = _async_devices_as_dict(hass, entry)
-    diag_data['devices'] = devs_data
+    diag_data["devices"] = devs_data
 
     return diag_data
 
 
 @callback
-def _async_devices_as_dict(
-    hass: HomeAssistant, entry: ConfigEntry
-) -> dict:
+def _async_devices_as_dict(hass: HomeAssistant, entry: ConfigEntry) -> dict:
     devs_data = {}
     device: RinnaiHeater = hass.data[DOMAIN].get(entry.entry_id, {})
     device_info = device._device_info()
@@ -41,7 +39,9 @@ def _async_devices_as_dict(
 
 
 @callback
-def _async_device_ha_info(hass: HomeAssistant, identifiers: set[tuple[str, str]]) -> dict | None:
+def _async_device_ha_info(
+    hass: HomeAssistant, identifiers: set[tuple[str, str]]
+) -> dict | None:
     device_registry = dr.async_get(hass)
     entity_registry = er.async_get(hass)
     hass_device = device_registry.async_get_device(identifiers)
