@@ -1,6 +1,5 @@
 import logging
-import re
-from typing import Any, Dict, Optional
+from typing import Any
 
 from homeassistant.components.binary_sensor import BinarySensorEntity, EntityCategory
 from homeassistant.const import Platform
@@ -35,9 +34,7 @@ class RinnaiHeaterBinarySensor(BinarySensorEntity):
         self._attr_translation_key = self._attr_unique_id
         self._attr_device_class = sensor_info.device_class
         self._attr_entity_registry_enabled_default = sensor_info.enabled
-        self._attr_entity_category = (
-            EntityCategory.DIAGNOSTIC if sensor_info.debug else None
-        )
+        self._attr_entity_category = EntityCategory.DIAGNOSTIC if sensor_info.debug else None
 
     async def async_added_to_hass(self):
         await self._heater.async_add_rinnai_heater_sensor(self._heater_data_updated)
@@ -55,9 +52,9 @@ class RinnaiHeaterBinarySensor(BinarySensorEntity):
             return self._heater.data[self._key] == "1"
 
     @property
-    def device_info(self) -> Optional[Dict[str, Any]]:
+    def device_info(self) -> dict[str, Any] | None:
         return self._heater._device_info()
 
     @property
-    def available(self) -> Optional[Dict[str, Any]]:
+    def available(self) -> dict[str, Any] | None:
         return self._key in self._heater.data

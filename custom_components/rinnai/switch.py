@@ -1,5 +1,5 @@
 import logging
-from typing import Any, Dict, Optional
+from typing import Any
 
 from homeassistant.components.switch import SwitchEntity
 from homeassistant.core import callback
@@ -55,9 +55,9 @@ class RinnaiHeaterPrioritySwitch(SwitchEntity):
         await self._heater.bus()
 
     @property
-    def device_info(self) -> Optional[Dict[str, Any]]:
+    def device_info(self) -> dict[str, Any] | None:
         return self._heater._device_info()
 
     @property
-    def available(self) -> Optional[Dict[str, Any]]:
+    def available(self) -> dict[str, Any] | None:
         return self._key in self._heater.data

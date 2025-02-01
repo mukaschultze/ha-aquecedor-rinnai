@@ -4,7 +4,6 @@ from homeassistant.components import dhcp, zeroconf
 from typing import Any
 from homeassistant.const import CONF_HOST, CONF_NAME
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
-from homeassistant.helpers import config_validation as cv
 from .const import (
     DOMAIN,
     DEFAULT_NAME,
@@ -42,15 +41,9 @@ CONFIG_SCHEMA = vol.Schema(
     {
         vol.Required(CONF_NAME, default=DEFAULT_NAME): str,
         vol.Optional(CONF_AUTO_PRIORITY, default=DEFAULT_AUTO_PRIORITY): bool,
-        vol.Optional(
-            CONF_SCAN_INTERVAL_TELA, default=DEFAULT_SCAN_INTERVAL_TELA
-        ): vol.Coerce(float),
-        vol.Optional(
-            CONF_SCAN_INTERVAL_CONSUMO, default=DEFAULT_SCAN_INTERVAL_CONSUMO
-        ): vol.Coerce(float),
-        vol.Optional(
-            CONF_SCAN_INTERVAL_BUS, default=DEFAULT_SCAN_INTERVAL_BUS
-        ): vol.Coerce(float),
+        vol.Optional(CONF_SCAN_INTERVAL_TELA, default=DEFAULT_SCAN_INTERVAL_TELA): vol.Coerce(float),
+        vol.Optional(CONF_SCAN_INTERVAL_CONSUMO, default=DEFAULT_SCAN_INTERVAL_CONSUMO): vol.Coerce(float),
+        vol.Optional(CONF_SCAN_INTERVAL_BUS, default=DEFAULT_SCAN_INTERVAL_BUS): vol.Coerce(float),
     }
 )
 
@@ -82,15 +75,11 @@ class RinnaiHeaterConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             except CannotConnect:
                 errors["base"] = "cannot_connect"
 
-        return self.async_show_form(
-            step_id="user", data_schema=HOST_SCHEMA, errors=errors
-        )
+        return self.async_show_form(step_id="user", data_schema=HOST_SCHEMA, errors=errors)
 
     async def async_step_config(self, user_input: dict[str, Any] | None = None):
         if user_input is not None:
-            return self.async_create_entry(
-                title=user_input[CONF_NAME], data={CONF_HOST: self.host, **user_input}
-            )
+            return self.async_create_entry(title=user_input[CONF_NAME], data={CONF_HOST: self.host, **user_input})
 
         return self.async_show_form(step_id="config", data_schema=CONFIG_SCHEMA)
 
@@ -112,9 +101,7 @@ class RinnaiHeaterConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         return self.async_show_form(
             step_id="reconfigure",
-            data_schema=self.add_suggested_values_to_schema(
-                RECONFIGURE_SCHEMA, reconfigure_entry.data
-            ),
+            data_schema=self.add_suggested_values_to_schema(RECONFIGURE_SCHEMA, reconfigure_entry.data),
             errors=errors,
             description_placeholders={"device_name": reconfigure_entry.title},
         )

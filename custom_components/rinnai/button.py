@@ -1,6 +1,5 @@
 import logging
-import re
-from typing import Any, Dict, Optional
+from typing import Any
 
 from homeassistant.components.button import ButtonEntity
 
@@ -29,9 +28,7 @@ class RinnaiHeaterTemperatureButton(ButtonEntity):
         self._increase = increase
 
         self._attr_has_entity_name = True
-        self._attr_unique_id = (
-            "temperature_increase" if increase else "temperature_decrease"
-        )
+        self._attr_unique_id = "temperature_increase" if increase else "temperature_decrease"
         self._attr_translation_key = self._attr_unique_id
 
     async def async_press(self):
@@ -47,9 +44,9 @@ class RinnaiHeaterTemperatureButton(ButtonEntity):
             await self._heater.prioridade(False)
 
     @property
-    def device_info(self) -> Optional[Dict[str, Any]]:
+    def device_info(self) -> dict[str, Any] | None:
         return self._heater._device_info()
 
     @property
-    def available(self) -> Optional[Dict[str, Any]]:
+    def available(self) -> dict[str, Any] | None:
         return True

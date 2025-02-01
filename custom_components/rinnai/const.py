@@ -21,9 +21,7 @@ DEFAULT_SCAN_INTERVAL_BUS = 15
 DEFAULT_SCAN_INTERVAL_TELA = 0
 DEFAULT_SCAN_INTERVAL_CONSUMO = 60 * 5
 
-Sensor = namedtuple(
-    "Sensor", ["name", "coeff", "unit", "platform", "device_class", "enabled", "debug"]
-)
+Sensor = namedtuple("Sensor", ["name", "coeff", "unit", "platform", "device_class", "enabled", "debug"])
 
 STATUS = []
 ERROR = []

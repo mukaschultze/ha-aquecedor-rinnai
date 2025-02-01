@@ -39,8 +39,7 @@ class RinnaiHeaterWaterHeater(WaterHeaterEntity):
         self._attr_temperature_unit = UnitOfTemperature.CELSIUS
         self._attr_operation_list = [STATE_GAS, STATE_OFF]
         self._attr_supported_features = (
-            WaterHeaterEntityFeature.OPERATION_MODE
-            | WaterHeaterEntityFeature.TARGET_TEMPERATURE
+            WaterHeaterEntityFeature.OPERATION_MODE | WaterHeaterEntityFeature.TARGET_TEMPERATURE
         )
 
     async def async_added_to_hass(self):
@@ -76,17 +75,11 @@ class RinnaiHeaterWaterHeater(WaterHeaterEntity):
 
         temperature = kwargs.get("temperature") * 100
 
-        nearest_temperature = min(
-            TEMPERATURES_MAP.values(), key=lambda x: abs(x - temperature)
-        )
-        nearest_temperature_index = list(TEMPERATURES_MAP.values()).index(
-            nearest_temperature
-        )
+        nearest_temperature = min(TEMPERATURES_MAP.values(), key=lambda x: abs(x - temperature))
+        nearest_temperature_index = list(TEMPERATURES_MAP.values()).index(nearest_temperature)
 
         current_temperature = self.target_temperature * 100
-        current_temperature_index = list(TEMPERATURES_MAP.values()).index(
-            current_temperature
-        )
+        current_temperature_index = list(TEMPERATURES_MAP.values()).index(current_temperature)
 
         steps = nearest_temperature_index - current_temperature_index
 
@@ -96,7 +89,7 @@ class RinnaiHeaterWaterHeater(WaterHeaterEntity):
         if self._heater._auto_priority:
             await self._heater.prioridade(True)
 
-        for i in range(abs(steps)):
+        for _i in range(abs(steps)):
             if steps > 0:
                 await self._heater.inc()
             else:

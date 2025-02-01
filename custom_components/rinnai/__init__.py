@@ -54,7 +54,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
         successReading = await heater.bus()
 
         if not successReading:
-            raise ConfigEntryNotReady(f"Unable to fetch Rinnai device")
+            raise ConfigEntryNotReady("Unable to fetch Rinnai device")
 
         hass.data[DOMAIN][entry.entry_id] = heater
 
@@ -65,7 +65,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
         raise ex
     except Exception as ex:
         _LOGGER.exception("Error setting up device", exc_info=True)
-        raise ConfigEntryNotReady(f"Unknown error connecting to device") from ex
+        raise ConfigEntryNotReady("Unknown error connecting to device") from ex
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
@@ -96,40 +96,28 @@ class RinnaiHeater:
         self._name = entry.title
         self._auto_priority = entry.data.get(CONF_AUTO_PRIORITY, DEFAULT_AUTO_PRIORITY)
 
-        self.data = dict()
+        self.data = {}
 
     @callback
     async def async_add_rinnai_heater_sensor(self, update_callback):
         # This is the first sensor, set up interval.
         if not self._sensors:
-            scan_interval_bus = self._entry.data.get(
-                CONF_SCAN_INTERVAL_BUS, DEFAULT_SCAN_INTERVAL_BUS
-            )
-            scan_interval_tela = self._entry.data.get(
-                CONF_SCAN_INTERVAL_TELA, DEFAULT_SCAN_INTERVAL_TELA
-            )
-            scan_interval_consumo = self._entry.data.get(
-                CONF_SCAN_INTERVAL_CONSUMO, DEFAULT_SCAN_INTERVAL_CONSUMO
-            )
+            scan_interval_bus = self._entry.data.get(CONF_SCAN_INTERVAL_BUS, DEFAULT_SCAN_INTERVAL_BUS)
+            scan_interval_tela = self._entry.data.get(CONF_SCAN_INTERVAL_TELA, DEFAULT_SCAN_INTERVAL_TELA)
+            scan_interval_consumo = self._entry.data.get(CONF_SCAN_INTERVAL_CONSUMO, DEFAULT_SCAN_INTERVAL_CONSUMO)
 
             a = (
-                async_track_time_interval(
-                    self._hass, self.bus, timedelta(seconds=scan_interval_bus)
-                )
+                async_track_time_interval(self._hass, self.bus, timedelta(seconds=scan_interval_bus))
                 if scan_interval_bus > 0
                 else lambda: None
             )
             b = (
-                async_track_time_interval(
-                    self._hass, self.tela, timedelta(seconds=scan_interval_tela)
-                )
+                async_track_time_interval(self._hass, self.tela, timedelta(seconds=scan_interval_tela))
                 if scan_interval_tela > 0
                 else lambda: None
             )
             c = (
-                async_track_time_interval(
-                    self._hass, self.consumo, timedelta(seconds=scan_interval_consumo)
-                )
+                async_track_time_interval(self._hass, self.consumo, timedelta(seconds=scan_interval_consumo))
                 if scan_interval_consumo > 0
                 else lambda: None
             )
@@ -164,7 +152,7 @@ class RinnaiHeater:
                 return read.split(",")
             except aiohttp.client_exceptions.ServerDisconnectedError:
                 return True  # not even an empty response, the priority endpoint simply closes the TCP connection
-            except Exception as e:
+            except Exception:
                 _LOGGER.exception(f"Error fetching /{endpoint} data", exc_info=True)
                 return False
             finally:
@@ -192,11 +180,9 @@ class RinnaiHeater:
         priority = PRIORITY_DISCRIMINATOR if set else "null"
         return await self.request(f"ip:{priority}:pri")
 
-    def update_data(
-        self, response: list[str], sensors: dict[int, str], update_entities=True
-    ):
+    def update_data(self, response: list[str], sensors: dict[int, str], update_entities=True):
         no_response = response is None or response is False
-        response = response or dict()
+        response = response or {}
 
         for name, address in sensors.items():
             self.data[name] = response[address]

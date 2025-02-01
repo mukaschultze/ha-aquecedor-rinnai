@@ -1,6 +1,5 @@
 import logging
-import re
-from typing import Any, Dict, Optional
+from typing import Any
 
 from homeassistant.components.sensor import (
     SensorEntity,
@@ -42,9 +41,7 @@ class RinnaiHeaterSensor(SensorEntity):
         self._attr_native_unit_of_measurement = sensor_info.unit
         self._attr_device_class = sensor_info.device_class
         self._attr_entity_registry_enabled_default = sensor_info.enabled
-        self._attr_entity_category = (
-            EntityCategory.DIAGNOSTIC if sensor_info.debug else None
-        )
+        self._attr_entity_category = EntityCategory.DIAGNOSTIC if sensor_info.debug else None
 
         if self._coeff is not None:
             if (
@@ -75,9 +72,9 @@ class RinnaiHeaterSensor(SensorEntity):
                 return float(self._heater.data[self._key]) * self._coeff
 
     @property
-    def device_info(self) -> Optional[Dict[str, Any]]:
+    def device_info(self) -> dict[str, Any] | None:
         return self._heater._device_info()
 
     @property
-    def available(self) -> Optional[Dict[str, Any]]:
+    def available(self) -> dict[str, Any] | None:
         return self._key in self._heater.data

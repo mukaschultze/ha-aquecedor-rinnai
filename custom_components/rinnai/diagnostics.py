@@ -12,9 +12,7 @@ TO_REDACT = {}
 TO_REDACT_DEV = {}
 
 
-async def async_get_config_entry_diagnostics(
-    hass: HomeAssistant, entry: ConfigEntry
-) -> dict:
+async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry: ConfigEntry) -> dict:
     diag_data = {"entry": async_redact_data(entry.as_dict(), TO_REDACT)}
 
     devs_data = _async_devices_as_dict(hass, entry)
@@ -39,9 +37,7 @@ def _async_devices_as_dict(hass: HomeAssistant, entry: ConfigEntry) -> dict:
 
 
 @callback
-def _async_device_ha_info(
-    hass: HomeAssistant, identifiers: set[tuple[str, str]]
-) -> dict | None:
+def _async_device_ha_info(hass: HomeAssistant, identifiers: set[tuple[str, str]]) -> dict | None:
     device_registry = dr.async_get(hass)
     entity_registry = er.async_get(hass)
     hass_device = device_registry.async_get_device(identifiers)
