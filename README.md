@@ -77,7 +77,27 @@ Após a instalação seu diretório de configurações deve ficar deste jeito:
 
 ![image](https://github.com/user-attachments/assets/e7889628-f046-4fca-91b2-64131481e08f)
 
-<!---->
+### Card
+
+![image](https://github.com/user-attachments/assets/1125684e-54db-4784-b77d-66c64d16b3f3)
+
+É possivel gerenciar o aquecedor em um dashboard como na imagem acima através do card `tile` usando o yaml abaixo:
+
+```yaml
+features:
+  - type: target-temperature
+  - type: water-heater-operation-modes
+type: tile
+entity: water_heater.e21_heater
+grid_options:
+  rows: auto
+  columns: full
+state_content:
+  - state
+  - current_temperature
+features_position: bottom
+vertical: false
+```
 
 ## Suporte e Contribuições
 
