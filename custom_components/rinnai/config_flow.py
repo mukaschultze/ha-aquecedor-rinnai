@@ -1,25 +1,27 @@
-from homeassistant import config_entries
-from homeassistant.core import HomeAssistant
-from homeassistant.components import dhcp, zeroconf
+import logging
 from typing import Any
+
+import voluptuous as vol
+from homeassistant import config_entries
 from homeassistant.const import CONF_HOST, CONF_NAME
+from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from homeassistant.helpers.service_info.dhcp import DhcpServiceInfo
+from homeassistant.helpers.service_info.zeroconf import ZeroconfServiceInfo
+
 from .const import (
-    DOMAIN,
-    DEFAULT_NAME,
-    DEFAULT_HOST,
-    DEFAULT_AUTO_PRIORITY,
-    DEFAULT_SCAN_INTERVAL_BUS,
-    DEFAULT_SCAN_INTERVAL_CONSUMO,
-    DEFAULT_SCAN_INTERVAL_TELA,
     CONF_AUTO_PRIORITY,
     CONF_SCAN_INTERVAL_BUS,
     CONF_SCAN_INTERVAL_CONSUMO,
     CONF_SCAN_INTERVAL_TELA,
+    DEFAULT_AUTO_PRIORITY,
+    DEFAULT_HOST,
+    DEFAULT_NAME,
+    DEFAULT_SCAN_INTERVAL_BUS,
+    DEFAULT_SCAN_INTERVAL_CONSUMO,
+    DEFAULT_SCAN_INTERVAL_TELA,
+    DOMAIN,
 )
-
-import voluptuous as vol
-import logging
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -106,14 +108,14 @@ class RinnaiHeaterConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             description_placeholders={"device_name": reconfigure_entry.title},
         )
 
-    async def async_step_zeroconf(self, discovery_info: zeroconf.ZeroconfServiceInfo):
+    async def async_step_zeroconf(self, discovery_info: ZeroconfServiceInfo):
         try:
             await self.async_set_serial_number(discovery_info.host)
             return await self.async_step_config()
         except CannotConnect:
             return self.async_abort(reason="cannot_connect")
 
-    async def async_step_dhcp(self, discovery_info: dhcp.DhcpServiceInfo):
+    async def async_step_dhcp(self, discovery_info: DhcpServiceInfo):
         try:
             await self.async_set_serial_number(discovery_info.ip)
             return await self.async_step_config()
