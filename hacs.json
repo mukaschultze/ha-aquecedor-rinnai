@@ -2,7 +2,7 @@
   "name": "Rinnai Tankless Water Heater",
   "filename": "rinnai.zip",
   "hide_default_branch": true,
-  "homeassistant": "2024.11.1",
+  "homeassistant": "2025.5.3",
   "render_readme": true,
   "zip_release": true
 }
