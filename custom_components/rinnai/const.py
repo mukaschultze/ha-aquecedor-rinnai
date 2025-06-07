@@ -1,4 +1,4 @@
-from collections import namedtuple
+from typing import NamedTuple
 
 from homeassistant.components.sensor import SensorDeviceClass
 from homeassistant.components.binary_sensor import BinarySensorDeviceClass
@@ -21,7 +21,16 @@ DEFAULT_SCAN_INTERVAL_BUS = 15
 DEFAULT_SCAN_INTERVAL_TELA = 0
 DEFAULT_SCAN_INTERVAL_CONSUMO = 60 * 5
 
-Sensor = namedtuple("Sensor", ["name", "coeff", "unit", "platform", "device_class", "enabled", "debug"])
+
+class Sensor(NamedTuple):
+    name: str
+    coeff: float
+    unit: str
+    platform: str
+    device_class: str
+    enabled: bool
+    debug: bool
+
 
 STATUS = []
 ERROR = []
