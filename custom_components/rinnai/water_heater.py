@@ -118,8 +118,8 @@ class RinnaiHeaterWaterHeater(WaterHeaterEntity):
 
     @property
     def available(self) -> dict[str, Any] | None:
-        return True
-
+        return self._heater.is_connected()
+    
     @property
     def capability_attributes(self) -> dict[str, Any]:
         # https://github.com/home-assistant/core/pull/130722/files

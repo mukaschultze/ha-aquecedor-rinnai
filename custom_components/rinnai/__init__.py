@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import aiohttp
+import time
 
 from datetime import timedelta
 
@@ -98,6 +99,9 @@ class RinnaiHeater:
 
         self.data = {}
 
+        self._last_success = time.time()
+        self._timeout = 0
+
     @callback
     async def async_add_rinnai_heater_sensor(self, update_callback):
         # This is the first sensor, set up interval.
@@ -105,6 +109,7 @@ class RinnaiHeater:
             scan_interval_bus = self._entry.data.get(CONF_SCAN_INTERVAL_BUS, DEFAULT_SCAN_INTERVAL_BUS)
             scan_interval_tela = self._entry.data.get(CONF_SCAN_INTERVAL_TELA, DEFAULT_SCAN_INTERVAL_TELA)
             scan_interval_consumo = self._entry.data.get(CONF_SCAN_INTERVAL_CONSUMO, DEFAULT_SCAN_INTERVAL_CONSUMO)
+            self._timeout = max(scan_interval_bus, scan_interval_tela) * 4
 
             a = (
                 async_track_time_interval(self._hass, self.bus, timedelta(seconds=scan_interval_bus))
@@ -149,15 +154,23 @@ class RinnaiHeater:
             try:
                 res = await self._client.get(f"http://{self._host}/{endpoint}")
                 read = await res.text()
+                self._last_success = time.time()
                 return read.split(",")
             except aiohttp.client_exceptions.ServerDisconnectedError:
                 return True  # not even an empty response, the priority endpoint simply closes the TCP connection
+            except aiohttp.client_exceptions.ClientConnectorError:
+                return False
+            except aiohttp.client_exceptions.ServerTimeoutError:
+                return False
             except Exception:
                 _LOGGER.exception(f"Error fetching /{endpoint} data", exc_info=True)
                 return False
             finally:
                 self._reading = False
 
+    def is_connected(self):
+        return time.time() - self._last_success < self._timeout
+    
     async def inc(self):
         return self.update_data(await self.request("inc"), SENSORS_TELA_ARRAY)
 
