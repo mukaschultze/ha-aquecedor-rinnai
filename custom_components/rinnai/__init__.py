@@ -194,9 +194,7 @@ class RinnaiHeater:
         return await self.request(f"ip:{priority}:pri")
 
     def update_data(self, response: list[str], sensors: dict[int, str], update_entities=True):
-        if response is None or response is False:
-            return False
-    
+        no_response = response is None or response is False
         response = response or {}
 
         for name, address in sensors.items():
@@ -206,7 +204,7 @@ class RinnaiHeater:
             for update_callback in self._sensors:
                 update_callback()
 
-        return True
+        return not no_response
 
     def _device_info(self):
         return {
