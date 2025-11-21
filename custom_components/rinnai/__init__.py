@@ -195,10 +195,10 @@ class RinnaiHeater:
 
     def update_data(self, response: list[str], sensors: dict[int, str], update_entities=True):
         no_response = response is None or response is False
-        response = response or {}
+        response = response or []
 
         for name, address in sensors.items():
-            self.data[name] = response[address] if address in response else None
+            self.data[name] = response[address] if address < len(response) else None
 
         if update_entities:
             for update_callback in self._sensors:
