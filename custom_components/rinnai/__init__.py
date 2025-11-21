@@ -198,7 +198,7 @@ class RinnaiHeater:
         response = response or {}
 
         for name, address in sensors.items():
-            self.data[name] = response[address]
+            self.data[name] = response[address] if address in response else None
 
         if update_entities:
             for update_callback in self._sensors:
