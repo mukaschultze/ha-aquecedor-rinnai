@@ -64,11 +64,17 @@ class RinnaiHeaterWaterHeater(WaterHeaterEntity):
 
     @property
     def is_on(self):
-        return self._heater.data["status"] != "11"
+        # "status" is missing until the first successful poll, same guard the
+        # temperature properties already use.
+        if "status" in self._heater.data:
+            return self._heater.data["status"] != "11"
 
     @property
     def current_operation(self):
-        return STATE_GAS if self.is_on else STATE_OFF
+        is_on = self.is_on
+        if is_on is None:
+            return None
+        return STATE_GAS if is_on else STATE_OFF
 
     async def async_set_temperature(self, **kwargs: Any):
         _LOGGER.debug(f"async_set_temperature: {kwargs}")
