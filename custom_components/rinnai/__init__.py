@@ -196,13 +196,24 @@ class RinnaiHeater:
 
     def update_data(self, response: list[str], sensors: dict[int, str], update_entities=True):
         no_response = response is None or response is False
-        response = response or []
 
-        for name, address in sensors.items():
-            if address < len(response):
-                self.data[name] = response[address]
-            else:
-                self.data.pop(name, None)
+        # `request` returns True on ServerDisconnectedError (the action
+        # succeeded but the controller closed the connection without a body)
+        # and False/None when the read failed. `response or []` did not guard
+        # against the first case: `True or []` is still True, so `len(True)`
+        # raised TypeError.
+        values = response if isinstance(response, list) else []
+
+        # Without a payload, keep the last known values. Clearing self.data
+        # makes _device_info() and the entity properties raise KeyError on
+        # every failed poll; unavailability is already reported by the
+        # `available` property, which checks is_connected().
+        if values:
+            for name, address in sensors.items():
+                if address < len(values):
+                    self.data[name] = values[address]
+                else:
+                    self.data.pop(name, None)
 
         if update_entities:
             for update_callback in self._sensors:
