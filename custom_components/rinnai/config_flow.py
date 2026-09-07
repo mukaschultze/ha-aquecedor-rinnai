@@ -1,3 +1,4 @@
+import asyncio
 import logging
 from typing import Any
 
@@ -26,16 +27,42 @@ from .const import (
 _LOGGER = logging.getLogger(__name__)
 
 
+SERIAL_ATTEMPTS = 3
+SERIAL_RETRY_DELAY = 1
+
+
 async def async_try_get_serial(hass: HomeAssistant, ip_address: str) -> str:
-    try:
-        client = async_get_clientsession(hass, False)
-        res = await client.get(f"http://{ip_address}/bus")
-        read = await res.text()
-        data = read.split(",")
-        return data[19]
-    except Exception as ex:
-        _LOGGER.error("Error connecting to Rinnai heater at %s: %s", ip_address, ex)
-        raise CannotConnect from ex
+    # The controller sometimes closes the TCP connection without answering —
+    # the same quirk RinnaiHeater.request absorbs by returning True. With a
+    # single attempt, DHCP discovery aborts and logs an error on every start
+    # for a device that is perfectly reachable.
+    client = async_get_clientsession(hass, False)
+    last_error: Exception | None = None
+
+    for attempt in range(SERIAL_ATTEMPTS):
+        try:
+            res = await client.get(f"http://{ip_address}/bus")
+            read = await res.text()
+            return read.split(",")[19]
+        except Exception as ex:  # noqa: BLE001 - any failure is worth retrying
+            last_error = ex
+            _LOGGER.debug(
+                "Attempt %s/%s to reach Rinnai heater at %s failed: %s",
+                attempt + 1,
+                SERIAL_ATTEMPTS,
+                ip_address,
+                ex,
+            )
+            if attempt + 1 < SERIAL_ATTEMPTS:
+                await asyncio.sleep(SERIAL_RETRY_DELAY)
+
+    _LOGGER.error(
+        "Error connecting to Rinnai heater at %s after %s attempts: %s",
+        ip_address,
+        SERIAL_ATTEMPTS,
+        last_error,
+    )
+    raise CannotConnect from last_error
 
 
 HOST_SCHEMA = vol.Schema({vol.Required(CONF_HOST, default=DEFAULT_HOST): str})

@@ -195,14 +195,29 @@ class RinnaiHeater:
         return await self.request(f"ip:{priority}:pri")
 
     def update_data(self, response: list[str], sensors: dict[int, str], update_entities=True):
-        no_response = response is None or response is False
-        response = response or []
+        # `request` returns a list on success, True on ServerDisconnectedError
+        # (the controller closed the connection without a body) and False/None
+        # when the read failed. `response or []` did not guard against the
+        # first case: `True or []` is still True, so `len(True)` raised
+        # TypeError.
+        #
+        # Only a list carries data, so anything else counts as no response.
+        # That matters beyond this method: async_setup_entry raises
+        # ConfigEntryNotReady when bus() is falsy, and treating a disconnect as
+        # success would set the entry up with an empty self.data.
+        values = response if isinstance(response, list) else []
+        no_response = not values
 
-        for name, address in sensors.items():
-            if address < len(response):
-                self.data[name] = response[address]
-            else:
-                self.data.pop(name, None)
+        # Without a payload, keep the last known values. Clearing self.data
+        # makes _device_info() and the entity properties raise KeyError on
+        # every failed poll; unavailability is already reported by the
+        # `available` property, which checks is_connected().
+        if values:
+            for name, address in sensors.items():
+                if address < len(values):
+                    self.data[name] = values[address]
+                else:
+                    self.data.pop(name, None)
 
         if update_entities:
             for update_callback in self._sensors:
