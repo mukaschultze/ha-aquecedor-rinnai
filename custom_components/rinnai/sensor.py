@@ -3,11 +3,10 @@ from typing import Any
 
 from homeassistant.components.sensor import (
     SensorEntity,
-    EntityCategory,
     SensorStateClass,
     SensorDeviceClass,
 )
-from homeassistant.const import Platform
+from homeassistant.const import EntityCategory, Platform
 from homeassistant.core import callback
 
 from .const import DOMAIN, SENSORS
