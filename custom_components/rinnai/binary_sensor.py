@@ -1,8 +1,8 @@
 import logging
 from typing import Any
 
-from homeassistant.components.binary_sensor import BinarySensorEntity, EntityCategory
-from homeassistant.const import Platform
+from homeassistant.components.binary_sensor import BinarySensorEntity
+from homeassistant.const import EntityCategory, Platform
 from homeassistant.core import callback
 
 from .const import DOMAIN, SENSORS
